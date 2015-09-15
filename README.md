@@ -79,9 +79,19 @@ Udacity's Project 4 - Web Performance
 
 
 Optimization:
+First measured to optimize:  I used Google Page Speed insights.  Showed a mobile score of 28/100 with the following recommendations:
+  - Optimize images.
+  - Eliminate Render Blocking JS and CSS in above-the-fold content
+  - Leverage Browser Caching
+
 First looked at picture sizes.
   - The first one Build Your Own 2048 is 100x50 pixels, not too large.
   - The 2nd, Web Perf Optimization is 100x62 pixels, not too large.
   - The 3rd, Mobile Web Development is 100x61 pixels, not too large.
   - The 4th, Cam's Pizzeria is 2048x1536, which is too large.  Used Grunt to make the file smaller and provide for multiple image sizes (for pizza.html).
+
+After optimizing images, Google PageSpeed showed a mobile score of 75/100, and the desktop score was 88/100.
+  - Eliminate Render Blocking JS and CSS in above-the-fold content
+  - Leverage Browser Caching
+
 
