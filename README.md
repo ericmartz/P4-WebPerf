@@ -76,3 +76,12 @@ Feeling uninspired by the portfolio? Here's a list of cool portfolios I found af
 # P4-WebPerf
 Udacity's Project 4 - Web Performance
 >>>>>>> cf761305a009fe752c9429b594cfacb87ac73c3d
+
+
+Optimization:
+First looked at picture sizes.
+  - The first one Build Your Own 2048 is 100x50 pixels, not too large.
+  - The 2nd, Web Perf Optimization is 100x62 pixels, not too large.
+  - The 3rd, Mobile Web Development is 100x61 pixels, not too large.
+  - The 4th, Cam's Pizzeria is 2048x1536, which is too large.  Used Grunt to make the file smaller and provide for multiple image sizes (for pizza.html).
+
