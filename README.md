@@ -78,7 +78,7 @@ Udacity's Project 4 - Web Performance
 >>>>>>> cf761305a009fe752c9429b594cfacb87ac73c3d
 
 
-Optimization:
+Optimization: (index.html)
 First measured to optimize:  I used Google Page Speed insights.  Showed a mobile score of 28/100 with the following recommendations:
   - Optimize images.
   - Eliminate Render Blocking JS and CSS in above-the-fold content
@@ -93,5 +93,11 @@ First looked at picture sizes.
 After optimizing images, Google PageSpeed showed a mobile score of 75/100, and the desktop score was 88/100.
   - Eliminate Render Blocking JS and CSS in above-the-fold content
   - Leverage Browser Caching
+
+Now I added the async attribute to try to eliminate the Render Blocking JS.
+Then for css:
+  - For the print.css file, added the media attribute "print"
+  - For Google Fonts, it looks like it is one of the first requests sent, and the last one in my timeline to come back in.  Takes 85ms to retrieve the file.
+
 
 
