@@ -95,10 +95,17 @@ After optimizing images, Google PageSpeed showed a mobile score of 75/100, and t
   - Leverage Browser Caching
 
 Now I added the async attribute to try to eliminate the Render Blocking JS.
+
 Then for css:
   - For the print.css file, added the media attribute "print"
   - For Google Fonts, it looks like it is one of the first requests sent, and the last one in my timeline to come back in.  Takes 85ms to retrieve the file.
+    - Used Google Web Font Loader to make the request asynchronous.
   - Used Grunt Cssmin to minify the CSS in print.css and style.css.  The minified style.css was then inlined in index.html.
+
+After the above steps were taken I measured on Google's PageSpeed Insights again.  Mobile score shows 92/100 and Desktop is 93/100.
+Still a couple steps it recommends:
+  - Leverage Browser Caching
+  - Optimize images.  It thinks I can squeeze even more juice out of two of the pics on the website.  Challenge Accepted!!  :-)
 
 
 
