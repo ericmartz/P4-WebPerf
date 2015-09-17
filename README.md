@@ -77,7 +77,7 @@ Feeling uninspired by the portfolio? Here's a list of cool portfolios I found af
 Udacity's Project 4 - Web Performance
 >>>>>>> cf761305a009fe752c9429b594cfacb87ac73c3d
 
-
+PROJECT 4 PART 1:
 Optimization: (index.html)
 First measured to optimize:  I used Google Page Speed insights.  Showed a mobile score of 28/100 with the following recommendations:
   - Optimize images.
