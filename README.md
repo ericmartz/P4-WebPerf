@@ -98,6 +98,7 @@ Now I added the async attribute to try to eliminate the Render Blocking JS.
 Then for css:
   - For the print.css file, added the media attribute "print"
   - For Google Fonts, it looks like it is one of the first requests sent, and the last one in my timeline to come back in.  Takes 85ms to retrieve the file.
+  - Used Grunt Cssmin to minify the CSS in print.css and style.css.  The minified style.css was then inlined in index.html.
 
 
 
