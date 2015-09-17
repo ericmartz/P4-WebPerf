@@ -77,7 +77,7 @@ Feeling uninspired by the portfolio? Here's a list of cool portfolios I found af
 Udacity's Project 4 - Web Performance
 >>>>>>> cf761305a009fe752c9429b594cfacb87ac73c3d
 
-
+PART 1 of PROJECT 4
 Optimization: (index.html)
 First measured to optimize:  I used Google Page Speed insights.  Showed a mobile score of 28/100 with the following recommendations:
   - Optimize images.
@@ -105,7 +105,19 @@ Then for css:
 After the above steps were taken I measured on Google's PageSpeed Insights again.  Mobile score shows 92/100 and Desktop is 93/100.
 Still a couple steps it recommends:
   - Leverage Browser Caching
-  - Optimize images.  It thinks I can squeeze even more juice out of two of the pics on the website.  Challenge Accepted!!  :-)
+  - Optimize images.  It thinks I can squeeze even more juice out of two of the pics on the website.
+    - So noticed on Google PageSpeed Insights that there was an option to download optimized resources.
+    - Found an article here: http://www.thesempost.com/google-pagespeed-insights-optimize-site-images-css-javascript/ from March 2015
+      which describes Google's efforts with these optimized resources.
+      - So I figured why not just use what Google is handing me when it comes to the newer images.  They comressed them, losslessly, and even
+        made the images just a bit smaller in dimensions.  Adding those to index.html and running PageSpeed Insights brought my score to 95/100.
+        Not a huge jump, but I figured why not get the score as high as possible.
+      Still, for JS and CSS I want to try to get that as small as possible using Grunt tasks.
+
+So final score seems to be 95/100 for PageSpeed Insights.  There is a recommendation to Leverage Browser Caching, and I thought there was a way
+to put in something in headers of HTML to make that work, but I didn't find any examples or info on that.  One page I did see said it could be done, but
+most browsers ignored it.  Everything else talked about adding info to your web server to help leverage browser caching.  Since I am using GitHub as my web
+server for these projects, I am skipping leveraging browser caching.
 
 
 
