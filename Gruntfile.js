@@ -64,16 +64,6 @@ module.exports = function(grunt) {
           ext: '.min.css'
         }]
       }
-    },
-    uglify: {
-      options: {
-        mangle: false
-      },
-      my_target: {
-        files: {
-          'js/perfmatters.js': ['js/perfmatters.js']
-        }
-      }
     }
   });
 
@@ -82,7 +72,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-mkdir');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.registerTask('default', ['clean', 'mkdir', 'responsive_images', 'cssmin', 'uglify']);
+  grunt.registerTask('default', ['clean', 'mkdir', 'responsive_images', 'cssmin']);
 
 };
