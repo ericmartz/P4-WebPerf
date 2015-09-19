@@ -112,5 +112,64 @@ Found an article here: http://www.thesempost.com/google-pagespeed-insights-optim
 So I figured why not just use what Google is handing me when it comes to the newer images. They comressed them, losslessly, and even made the images just a bit smaller in dimensions. Adding those to index.html and running PageSpeed Insights brought my score to 95/100. Not a huge jump, but I figured why not get the score as high as possible. Still, for JS and CSS I want to try to get that as small as possible using Grunt tasks.
 So final score seems to be 95/100 for PageSpeed Insights. There is a recommendation to Leverage Browser Caching, and I thought there was a way to put in something in headers of HTML to make that work, but I didn't find any examples or info on that. One page I did see said it could be done, but most browsers ignored it. Everything else talked about adding info to your web server to help leverage browser caching. Since I am using GitHub as my web server for these projects, I am skipping leveraging browser caching.
 
+Before starting Part 2 of Project 4, a note: I added several Grunt tasks to this project, and my Git commands are taking forever to run.
+So, I learned that I probably need to configure the gitignore file to ignore everything in the node_modules folder in projects going forward.
 
+PROJECT 4 PART 2
+First things first, measured the amount of time it takes for the resizePizzas function to run.
+Instead of one measure, I did three and averaged them together to get a general idea.  Average time of three runtimes were 179ms.
+Going from the class we took, I knew that the issue is that we're calling offsetWidth within a for loop in the resizePizza function, so I moved the approrpriate
+code outside of the function.  Also, rather than do several querySelectorAll functions, I created a variable pizzaContainer to hold the query selection.
 
+So this: 
+function changePizzaSizes(size) {
+  for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
+    var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
+    var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
+    document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+  }
+}
+
+Became this:
+function changePizzaSizes(size) {
+
+  var pizzaContainer = document.querySelectorAll(".randomPizzaContainer");
+  var dx = determineDx(pizzaContainer, size);
+  var newwidth = (pizzaContainer.offsetWidth + dx) + 'px';
+
+  for (var i = 0; i < pizzaContainer.length; i++) {
+    pizzaContainer[i].style.width = newwidth;
+  }
+}
+
+Now my average time to resizePizzas is 0.94ms.
+
+Recorded another time line just scrolling and identified FSL in updatePositions().
+Also, getting "Average time to generate last 10 frames: XX.XXXms" average of 5 time measurements is 32.6966ms
+
+Looking at updatePositions, I feel the following for loop is the issue:
+for (var i = 0; i < items.length; i++) {
+  var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+  items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+}
+
+First, going to take the (document.body.scrollTop / 1250) calculation out of the loop so it only has to be calculated once.
+
+Now the last 5 time measurements of "Average time to generate last 10 frames" is 1.8248ms.
+
+Looking at the Timeline, there is still lots of paint, so I looked at the CSS for the mover.  Added the Will Change property.  Didn't seem to make a huge change.
+
+Looking at this resource(https://discussions.udacity.com/t/lots-of-time-in-paint-but-what-is-left-to-optimize/23117), some people indicate that there are too many pizzas.  At first, I thought that has to be cheating, but I found where the pizzas were created and reduced the number and noticed that the background still looks right (I thought I would run out of pizzas while I scrolled).  Changing from 200 to 50 and then to 30 and then 20 significantly helped the FPS.  Actually, 99% of frames deliver under 60FPS, but still getting a couple spikes.
+
+Now the last 5 time measurements of "Average time to generate last 10 frames" is 0.3430ms.
+
+Finally, checking CSS Triggers indicates .left property triggers layout, paint and composite.  jankfree.org links to a good article on HTML5Rocks that shows the cheapest ways to animate (http://www.html5rocks.com/en/tutorials/speed/high-performance-animations/).  Transform only uses composite.  
+
+Initially wrote this line: items[i].style.transform = 'translateX(' + 100 * phase + 'px)';, but it moved all the pizzas towards the middle.
+Console logging (items[i].style.transform) it looks like the pizzas are placed and then immediately transformed?  Adding this: console.log('Elem: ' + elem.basicLeft); to the for loop in document.addEventListener('DOMContentLoaded', function() {} seems to have confirmed it.  So I tried commenting out updatePositions() in the function and it just made the pizzas appear in the exact middle and then they transformed when they scrolled.  So maybe something in updatePositions() is causing the pizzas to move towards the middle.
+
+Running a couple more console logs: console.log('Item ' + [i] + ': ' + items[i].style.left); & console.log('Item ' + [i] + ': ' + items[i].style.transform); It appears that the .left actually properly sets the pizza image from the left of the viewport.  Translate never sets the position properly.
+
+Looking at some resources to see why the translation is not working, found this resource: https://github.com/udacity/fend-office-hours/tree/master/Web%20Optimization/Effective%20Optimizations%20for%2060%20FPS.  It states that traansform is not going to add that much performance, so I am not going to worry about it for now.
+
+Still a couple spikes slightly above 60FPS when I am scrolling through the whole page, but I think I have it. Going to submit and see how it goes.

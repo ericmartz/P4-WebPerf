@@ -450,10 +450,20 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+
+    // pizza is a variable that holds one pizza.
+    var pizza = document.querySelector(".randomPizzaContainer")
+
+    // pizzaContainers holds all pizzas 
+    var pizzasContainer = document.querySelectorAll(".randomPizzaContainer");
+
+    // Moved code below outside of the loop to stop the FSL
+    var dx = determineDx(pizza, size);
+    var newwidth = (pizza.offsetWidth + dx) + 'px';
+
+    // Changed all the document.querySelectorAll queries to the variable pizzaContainer so I would only have to do the query once.
+    for (var i = 0; i < pizzasContainer.length; i++) {
+      pizzasContainer[i].style.width = newwidth;
     }
   }
 
@@ -500,12 +510,18 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
+  var phase; 
   window.performance.mark("mark_start_frame");
 
   var items = document.querySelectorAll('.mover');
+
+  //Moved the calculation of scrollTop out of the loop.  
+  var scroll = document.body.scrollTop / 1250;
+
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    phase = Math.sin((scroll) + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    //console.log('Item ' + [i] + ': ' + items[i].style.transform);  // I was using this simple one line console to look through variables.
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -525,7 +541,8 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  // Reduced the number of pizzas being rendered.  
+  for (var i = 0; i < 20; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";

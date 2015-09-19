@@ -33,6 +33,10 @@ form {
   position: fixed;
   width: 256px;
   z-index: -1;
+  /* Added this to put the moving pizzas on their own layer and stop them from painting every frame. */
+  transform: translateZ(0); /* Putting in the transforms for compatibility with older browsers */
+  transform: translate3d(0,0,0);
+  will-change: transform;
 }
 
 .randomPizzaContainer {
@@ -46,6 +50,6 @@ form {
   clear:both;
 }
 
- .container {
+.container {
   background-color: rgba(240, 60, 60, 0.8);
 }
